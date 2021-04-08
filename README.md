@@ -2,6 +2,8 @@
 Ingest template for a new pipeline that runs on your local filesystem.
 
 ## Prerequisites
+Install Python 3
+
 Install the tsdat Python dependencies:
 
 ```bash

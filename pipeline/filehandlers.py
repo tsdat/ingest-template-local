@@ -1,16 +1,17 @@
 import xarray as xr
+import pandas as pd
 from tsdat.io import AbstractFileHandler
 from tsdat import Config
 
 
-class DummyFileHandler(AbstractFileHandler):
+class StaFileHandler(AbstractFileHandler):
     """-------------------------------------------------------------------
-    Class containing placeholder code for a custom file reader.
+    Custom file handler for reading *.sta files.
 
     See https://tsdat.readthedocs.io/ for more file handler examples.
     -------------------------------------------------------------------"""
-    @staticmethod
-    def write(ds: xr.Dataset, filename: str, config: Config, **kwargs):
+
+    def write(self, ds: xr.Dataset, filename: str, config: Config, **kwargs):
         """-------------------------------------------------------------------
         Classes derived from the FileHandler class can implement this method
         to save to a custom file format.
@@ -24,8 +25,7 @@ class DummyFileHandler(AbstractFileHandler):
         -------------------------------------------------------------------"""
         raise NotImplementedError("Error: this file format should not be used to write to.")
 
-    @staticmethod
-    def read(filename: str, **kwargs) -> xr.Dataset:
+    def read(self, filename: str, **kwargs) -> xr.Dataset:
         """-------------------------------------------------------------------
         Classes derived from the FileHandler class can implement this method.
         to read a custom file format into a xr.Dataset object.
@@ -37,14 +37,5 @@ class DummyFileHandler(AbstractFileHandler):
             xr.Dataset: An xr.Dataset object
         -------------------------------------------------------------------"""
 
-        # Create dummy data dictionary
-        dictionary = {
-            # Dimensions / coordinates
-            "time": {"dims": ["time"], "data": [1, 2, 3]},
-
-            # Data variables
-            "a": {"dims": ["time"], "data": [1.1, 2.2, 3.3]},
-            "b": {"dims": ["time"], "data": [1.4, 2.5, 3.6]},
-            "c": {"dims": ["time"], "data": [1.7, 2.8, 3.9]}
-        }
-        return xr.Dataset.from_dict(dictionary)
+        df = pd.read_csv(filename, sep="\t", header=41, index_col=False)
+        return df.to_xarray()
