@@ -2,9 +2,9 @@
 Ingest template for a new pipeline that runs on your local filesystem.
 
 ## Prerequisites
-Install Python 3
+Install Python 3.8+. We recommend using anaconda or venv to manage your python environment.
 
-Install the tsdat Python dependencies:
+Install tsdat:
 
 ```bash
 pip3 install tsdat
@@ -18,13 +18,17 @@ pip3 install tsdat
 
 ## Running the pipeline from the command line
 ```bash
-./run_pipeline.py $LIST_OF_FOLDERS_OR_FILES
+python3 run_pipeline.py LIST_OF_FOLDERS_OR_FILES
 ```
 Example:
 ```bash
-./run_pipeline.py tests/data
+python3 run_pipeline.py data/input
 ```
 
-Will process all the files in the tests/data folder.
+Will process all the files in the data/input folder.
 
 ## Running/debugging the pipeline via a unit test
+
+```bash
+python3 tests/test_pipeline.py
+```
