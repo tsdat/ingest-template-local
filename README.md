@@ -18,14 +18,14 @@ pip3 install tsdat
 
 ## Running the pipeline from the command line
 ```bash
-python3 run_pipeline.py LIST_OF_FOLDERS_OR_FILES
+python3 run_pipeline.py [LIST_OF_FOLDERS_OR_FILES]
 ```
 Example:
 ```bash
-python3 run_pipeline.py data/input
+python3 run_pipeline.py data/inputs
 ```
 
-Will process all the files in the data/input folder.
+Will process all the files in the data/inputs folder.
 
 ## Running/debugging the pipeline via a unit test
 
