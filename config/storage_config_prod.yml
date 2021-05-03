@@ -7,7 +7,7 @@ storage:
 
   file_handlers:
     input:
-      imu:
+      sta:
         file_pattern: '.*\.sta'
         classname: pipeline.filehandlers.StaFileHandler
 
