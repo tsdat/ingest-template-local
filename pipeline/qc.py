@@ -1,10 +1,10 @@
 from typing import Optional
 
 import numpy as np
-from tsdat.qc import QCOperator, QCErrorHandler
+from tsdat.qc import QualityChecker, QualityHandler
 
 
-class DummyQCTest(QCOperator):
+class DummyQCTest(QualityChecker):
     """-------------------------------------------------------------------
     Class containing placeholder code to perform a single QC test on a
     Dataset variable.
@@ -44,7 +44,7 @@ class DummyQCTest(QCOperator):
         return results_array
 
 
-class DummyErrorHandler(QCErrorHandler):
+class DummyErrorHandler(QualityHandler):
     """-------------------------------------------------------------------
     Class containing placeholder code for a custom error handler.
 

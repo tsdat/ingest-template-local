@@ -3,7 +3,7 @@ storage:
 
   classname:  tsdat.io.FilesystemStorage     # Choose from FilesystemStorage or AwsStorage
   parameters:
-    retain_input_files: True                 # Whether to delete input files after they are processed
+    retain_input_files: True                 # Whether to keep input files after they are processed
     root_dir: ${CONFIG_DIR}/../storage/root  # The root dir where processed files will be stored
 
   # Declare the handlers that will be used to read input files and
