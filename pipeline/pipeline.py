@@ -16,36 +16,29 @@ plt.style.use(style_file)
 
 
 class Pipeline(IngestPipeline):
-    """-------------------------------------------------------------------
-    Example tsdat ingest pipeline used to process lidar instrument data
-    from a buoy stationed at Morro Bay, California.
+    """Example tsdat ingest pipeline used to process lidar instrument data from
+    a buoy stationed at Morro Bay, California.
 
-    See https://tsdat.readthedocs.io/ for more on configuring tsdat
-    pipelines.
-    -------------------------------------------------------------------"""
+    See https://tsdat.readthedocs.io/ for more on configuring tsdat pipelines.
+    """
 
-    def hook_apply_corrections(self, dataset: xr.Dataset, raw_mapping: Dict[str, xr.Dataset]) -> xr.Dataset:
+    def hook_customize_dataset(self, dataset: xr.Dataset, raw_mapping: Dict[str, xr.Dataset]) -> xr.Dataset:
         """-------------------------------------------------------------------
-        Pipeline hook that can be used to apply standard corrections for the
-        instrument/measurement or calibrations. This method is called
-        immediately after the dataset is converted to standard format and
-        before any QC tests are applied.
-
-        If corrections are applied, then the `corrections_applied` attribute
-        should be updated on the variable(s) that this method applies
-        corrections to.
+        Hook to allow for user customizations to the standardized dataset such
+        as inserting a derived variable based on other variables in the
+        dataset.  This method is called immediately after the apply_corrections
+        hook and before any QC tests are applied.
 
         Args:
         ---
-            dataset (xr.Dataset):   A standardized xarray dataset where the
-                                    variable names correspond with the output
-                                    variable names from the config file.
+            dataset (xr.Dataset): The dataset to customize.
             raw_mapping (Dict[str, xr.Dataset]):    The raw dataset mapping.
+
         Returns:
         ---
-            xr.Dataset: The input xarray dataset with corrections applied.
+            xr.Dataset: The customized dataset.
         -------------------------------------------------------------------"""
-
+        
         # Compress row of variables in input into variables dimensioned by time and height
         for raw_filename, raw_dataset in raw_mapping.items():
             if ".sta" in raw_filename:
@@ -65,24 +58,6 @@ class Pipeline(IngestPipeline):
             dataset["wind_direction"].data = new_direction
             dataset["wind_direction"].attrs["corrections_applied"] = "Applied +180 degree calibration factor."
 
-        return dataset
-
-    def hook_customize_dataset(self, dataset: xr.Dataset, raw_mapping: Dict[str, xr.Dataset]) -> xr.Dataset:
-        """-------------------------------------------------------------------
-        Hook to allow for user customizations to the standardized dataset such
-        as inserting a derived variable based on other variables in the
-        dataset.  This method is called immediately after the apply_corrections
-        hook and before any QC tests are applied.
-
-        Args:
-        ---
-            dataset (xr.Dataset): The dataset to customize.
-            raw_mapping (Dict[str, xr.Dataset]):    The raw dataset mapping.
-
-        Returns:
-        ---
-            xr.Dataset: The customized dataset.
-        -------------------------------------------------------------------"""
         return dataset
 
     def hook_customize_raw_datasets(self, raw_dataset_mapping: Dict[str, xr.Dataset]) -> Dict[str, xr.Dataset]:
@@ -212,7 +187,7 @@ class Pipeline(IngestPipeline):
         filename = DSUtil.get_plot_filename(dataset, "wind_speed_and_direction", "png")
         with self.storage._tmp.get_temp_filepath(filename) as tmp_path:
 
-            # Reduce dimensionality of dataset for plotting
+            # Reduce dimensionality of dataset for plotting quivers
             ds_1H: xr.Dataset = ds.resample(time="1H").nearest()
 
             # Calculations for contour plots
@@ -231,7 +206,6 @@ class Pipeline(IngestPipeline):
 
             # Make top subplot -- contours and quiver plots for wind speed and direction
             csf = ds.wind_speed.plot.contourf(ax=axs[0], x="time", levels=levels, cmap=wind_cmap, add_colorbar=False)
-            # ds.wind_speed.plot.contour(ax=axs[0], x="time", levels=levels, colors="lightgray", linewidths=0.5)
             axs[0].quiver(X, Y, U, V, width=0.002, scale=60, color="white", pivot='middle', zorder=10)
             add_colorbar(axs[0], csf, r"Wind Speed (ms$^{-1}$)")
 

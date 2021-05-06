@@ -9,7 +9,13 @@ storage:
     input:
       sta:
         file_pattern: '.*\.sta'
-        classname: pipeline.filehandlers.StaFileHandler
+        classname: tsdat.io.filehandlers.CsvHandler
+        parameters:
+          read:
+            read_csv:
+              sep: "\t"
+              header: 41
+              index_col: False
 
     output:
       netcdf:
