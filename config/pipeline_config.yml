@@ -7,13 +7,13 @@ pipeline:
   temporal: 10min
   data_level: a1
 
-dataset_definition:  # Describes the dataset that will be produced
+dataset_definition:
   attributes:
-    title: Lidar Ingest for .sta file
-    description: Example ingest of data from a buoy stationed at Morro Bay, California.
+    title: Example Ingest for a2e Lidar Data
+    description: Example ingest of lidar data from a buoy stationed at Morro Bay, California.
     conventions: "ME Data Pipeline Standards: Version 1.0"
     institution: Pacific Northwest National Laboratory
-    code_url: https://github.com/tsdat/tsdat/releases/tag/v0.2.1
+    code_url: https://github.com/tsdat/ingest-template-local
     location_meaning: Morro Bay
 
   dimensions:
