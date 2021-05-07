@@ -2,12 +2,12 @@
 Ingest template for a new pipeline that runs on your local filesystem.
 
 ## Prerequisites
-Install Python 3.8+. We recommend using anaconda or venv to manage your python environment.
+Install Python 3.7+. We recommend using anaconda or venv to manage your python environment.
 
 Install tsdat:
 
 ```bash
-pip3 install tsdat
+pip install tsdat
 ```
 
 ## Project Hierarchy
@@ -26,7 +26,7 @@ Example:
 python3 run_pipeline.py data/inputs --mode dev
 ```
 
-Will process all the files in the data/inputs folder using the devevelopment configuration.
+Will process all the files in the data/inputs folder using the development configuration.
 
 ## Running/debugging the pipeline via a unit test
 
