@@ -52,6 +52,11 @@ dataset_definition:
       type: float
       attrs:
         long_name: Wind Speed
+        description: "Wind speed is the measurement of how fast wind is moving past a 
+        fixed location in the horizontal plane. The lidar wind profiler, which is 
+        mounted on the buoy hull, measures wind speed at heights between 40 m to 250 
+        meters above the sea surface by detecting the reflection of laser signals sent 
+        into the atmosphere."
         units: m/s
 
     wind_direction:
@@ -59,6 +64,9 @@ dataset_definition:
       type: float
       attrs:
         long_name: Wind Direction
+        description: "Wind speed direction is the direction from which the wind is 
+        originating. Wind direction is measured at multiple heights between 40 to 250 
+        meters above the sea surface using the lidar wind profiler mounted on the buoy."
         units: degrees
 
     data_availability:
@@ -66,17 +74,23 @@ dataset_definition:
       type: float
       attrs:
         long_name: Availability
+        description: "Data availability is the ratio of measurements recorded against the 
+        number of measurements that were expected over the same interval. For example, 
+        if measurements are expected to be made once a minute for 100 minutes, but only 
+        99 measurements are recorded, the data availability is 99%."
         units: "%"
-
-    pressure:
+    
+    air_temp:
       input:
-        name: Pressure (hPa)
-        units: hPa
+        name: Int Temp (�C)
+        units: degC
       dims: [time]
       type: float
       attrs:
-        long_name: Pressure
-        units: hPa
+        long_name: Air Temperature
+        description: "Air temperature measures how hot or cold the atmosphere is at the 
+        location of the sensor."
+        units: degC
 
 #-----------------------------------------------------------------
 quality_management:
