@@ -57,6 +57,7 @@ dataset_definition:
         mounted on the buoy hull, measures wind speed at heights between 40 m to 250 
         meters above the sea surface by detecting the reflection of laser signals sent 
         into the atmosphere."
+        standard_name: wind_speed
         units: m/s
 
     wind_direction:
@@ -67,6 +68,9 @@ dataset_definition:
         description: "Wind speed direction is the direction from which the wind is 
         originating. Wind direction is measured at multiple heights between 40 to 250 
         meters above the sea surface using the lidar wind profiler mounted on the buoy."
+        comment: "Wind direction is measured such that 0 deg is wind blowing from north
+        to south, 90 deg is wind blowing west to east, etc."
+        standard_name: wind_from_direction
         units: degrees
 
     data_availability:
@@ -90,7 +94,9 @@ dataset_definition:
         long_name: Air Temperature
         description: "Air temperature measures how hot or cold the atmosphere is at the 
         location of the sensor."
+        standard_name: air_temperature
         units: degC
+        fail_range: [10, 50]
 
 #-----------------------------------------------------------------
 quality_management:
@@ -123,5 +129,29 @@ quality_management:
           bit: 1
           assessment: Bad
           meaning: "Value is equal to _FillValue or NaN"
+    variables:
+      - DATA_VARS
+
+  manage_fail_min:
+    checker:
+      classname: tsdat.qc.checkers.CheckFailMin
+    handlers:
+      - classname: tsdat.qc.handlers.RecordQualityResults
+        parameters:
+          bit: 2
+          assessment: Bad
+          meaning: "Value is less than fail_range"
+    variables:
+      - DATA_VARS
+
+  manage_fail_max:
+    checker:
+      classname: tsdat.qc.checkers.CheckFailMax
+    handlers:
+      - classname: tsdat.qc.handlers.RecordQualityResults
+        parameters:
+          bit: 3
+          assessment: Bad
+          meaning: "Value is greater than fail_range"
     variables:
       - DATA_VARS
