@@ -22,6 +22,37 @@ class Pipeline(IngestPipeline):
     See https://tsdat.readthedocs.io/ for more on configuring tsdat pipelines.
     """
 
+    def hook_customize_raw_datasets(self, raw_dataset_mapping: Dict[str, xr.Dataset]) -> Dict[str, xr.Dataset]:
+        """-------------------------------------------------------------------
+        Hook to allow for user customizations to one or more raw xarray Datasets
+        before they merged and used to create the standardized dataset.  The
+        raw_dataset_mapping will contain one entry for each file being used
+        as input to the pipeline.  The keys are the standardized raw file name,
+        and the values are the datasets.
+
+        This method would typically only be used if the user is combining
+        multiple files into a single dataset.  In this case, this method may
+        be used to correct coordinates if they don't match for all the files,
+        or to change variable (column) names if two files have the same
+        name for a variable, but they are two distinct variables.
+
+        This method can also be used to check for unique conditions in the raw
+        data that should cause a pipeline failure if they are not met.
+
+        This method is called before the inputs are merged and converted to
+        standard format as specified by the config file.
+
+        Args:
+        ---
+            raw_dataset_mapping (Dict[str, xr.Dataset])     The raw datasets to
+                                                            customize.
+
+        Returns:
+        ---
+            Dict[str, xr.Dataset]: The customized raw dataset.
+        -------------------------------------------------------------------"""
+        return raw_dataset_mapping
+
     def hook_customize_dataset(self, dataset: xr.Dataset, raw_mapping: Dict[str, xr.Dataset]) -> xr.Dataset:
         """-------------------------------------------------------------------
         Hook to allow for user customizations to the standardized dataset such
@@ -59,37 +90,6 @@ class Pipeline(IngestPipeline):
             dataset["wind_direction"].attrs["corrections_applied"] = "Applied +180 degree calibration factor."
 
         return dataset
-
-    def hook_customize_raw_datasets(self, raw_dataset_mapping: Dict[str, xr.Dataset]) -> Dict[str, xr.Dataset]:
-        """-------------------------------------------------------------------
-        Hook to allow for user customizations to one or more raw xarray Datasets
-        before they merged and used to create the standardized dataset.  The
-        raw_dataset_mapping will contain one entry for each file being used
-        as input to the pipeline.  The keys are the standardized raw file name,
-        and the values are the datasets.
-
-        This method would typically only be used if the user is combining
-        multiple files into a single dataset.  In this case, this method may
-        be used to correct coordinates if they don't match for all the files,
-        or to change variable (column) names if two files have the same
-        name for a variable, but they are two distinct variables.
-
-        This method can also be used to check for unique conditions in the raw
-        data that should cause a pipeline failure if they are not met.
-
-        This method is called before the inputs are merged and converted to
-        standard format as specified by the config file.
-
-        Args:
-        ---
-            raw_dataset_mapping (Dict[str, xr.Dataset])     The raw datasets to
-                                                            customize.
-
-        Returns:
-        ---
-            Dict[str, xr.Dataset]: The customized raw dataset.
-        -------------------------------------------------------------------"""
-        return raw_dataset_mapping
 
     def hook_finalize_dataset(self, dataset: xr.Dataset) -> xr.Dataset:
         """-------------------------------------------------------------------
