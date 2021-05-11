@@ -4,10 +4,10 @@ Ingest template for a new pipeline that runs on your local filesystem.
 ## Prerequisites
 Install Python 3.7+. We recommend using anaconda or venv to manage your python environment.
 
-Install tsdat:
+Install dependencies:
 
 ```bash
-pip install tsdat
+pip install -r requirements.txt
 ```
 
 ## Project Hierarchy
