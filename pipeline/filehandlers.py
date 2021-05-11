@@ -4,7 +4,7 @@ from tsdat.io import AbstractFileHandler
 from tsdat import Config
 
 
-class StaFileHandler(AbstractFileHandler):
+class DummyFileHandler(AbstractFileHandler):
     """-------------------------------------------------------------------
     Custom file handler for reading *.sta files.
 
