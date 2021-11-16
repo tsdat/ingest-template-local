@@ -1,12 +1,16 @@
 import xarray as xr
-import pandas as pd
 from tsdat.io import AbstractFileHandler
 from tsdat import Config
 
 
 class DummyFileHandler(AbstractFileHandler):
     """-------------------------------------------------------------------
-    Custom file handler for reading *.sta files.
+    Dummy FileHandler. Users should customize this class if they want to
+    read or write data in a format that is not supported out-of-the-box.
+
+    To register this FileHandler for use in the IngestPipeline, users must
+    update the config/storage_config_<dev or prod>.yml file. Note that the
+    classname for this FileHandler should be: `pipeline.filehandlers.DummyFileHandler`
 
     See https://tsdat.readthedocs.io/ for more file handler examples.
     -------------------------------------------------------------------"""
@@ -23,7 +27,7 @@ class DummyFileHandler(AbstractFileHandler):
             config (Config, optional):  Optional Config object. Defaults to
                                         None.
         -------------------------------------------------------------------"""
-        raise NotImplementedError("Error: this file format should not be used to write to.")
+        raise NotImplementedError
 
     def read(self, filename: str, **kwargs) -> xr.Dataset:
         """-------------------------------------------------------------------
@@ -36,6 +40,4 @@ class DummyFileHandler(AbstractFileHandler):
         Returns:
             xr.Dataset: An xr.Dataset object
         -------------------------------------------------------------------"""
-
-        df = pd.read_csv(filename, sep="\t", header=41, index_col=False)
-        return df.to_xarray()
+        raise NotImplementedError

@@ -4,7 +4,7 @@ import numpy as np
 from tsdat.qc import QualityChecker, QualityHandler
 
 
-class DummyQCTest(QualityChecker):
+class DummyQualityChecker(QualityChecker):
     """-------------------------------------------------------------------
     Class containing placeholder code to perform a single QC test on a
     Dataset variable.
@@ -44,7 +44,7 @@ class DummyQCTest(QualityChecker):
         return results_array
 
 
-class DummyErrorHandler(QualityHandler):
+class DummyQualityHandler(QualityHandler):
     """-------------------------------------------------------------------
     Class containing placeholder code for a custom error handler.
 

@@ -7,9 +7,19 @@ storage:
 
   file_handlers:
     input:
+      # sta:
+      #   file_pattern: '.*\.sta'
+      #   classname: tsdat.io.filehandlers.CsvHandler
+      #   parameters:
+      #     read:
+      #       read_csv:
+      #         sep: "\t"
+      #         header: 41
+      #         index_col: False
+
       sta:
         file_pattern: '.*\.sta'
-        classname: tsdat.io.filehandlers.CsvHandler
+        classname: pipeline.filehandlers.DummyFileHandler
         parameters:
           read:
             read_csv:

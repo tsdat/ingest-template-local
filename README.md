@@ -1,38 +1,62 @@
 # ingest-template-local
-Ingest template for a new pipeline that runs on your local filesystem.
 
-## Prerequisites
-Install Python 3.7+. We recommend using anaconda or venv to manage your python environment.
+This is a template repository that can be used to set up tsdat ingests on your local computer. 
 
-Install dependencies:
+- other templates: https://github.com/tsdat/template-repositories
+- tsdat homepage: https://github.com/tsdat/tsdat
+- tsdat documentation: https://tsdat.readthedocs.io
 
-```bash
-pip install -r requirements.txt
-```
+## Getting Started
 
-## Project Hierarchy
-* config
-* data
-* pipeline
-* tests
-* run_pipeline.py
+1. Install dependencies. We recommend using [conda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) to manage your environment:
+    ```
+    $ conda create --name tsdat-local python=3.8
+    ...
+    $ conda activate tsdat-local
+    $ pip install -r requirements.txt
+    ```
 
-## Running the pipeline from the command line
-```bash
-python3 run_pipeline.py [LIST_OF_FOLDERS_OR_FILES] --mode [prod OR dev]
-```
-Example:
-```bash
-python3 run_pipeline.py data/inputs --mode dev
-```
+2. Add your data:
+    * `data/inputs/<your data file>`
 
-Will process all the files in the data/inputs folder using the development configuration.
+3. Customize the configuration files:
+    * `config/pipeline_config.yml`
+    * `config/storage_config_dev.yml`
+    * `config/storage_config_prod.yml` (Optional – can delete this)
 
-## Running/debugging the pipeline via a unit test
+4. Customize pipeline code:
+    * `pipeline/pipeline.py`
+    * `pipeline/filehandlers.py` (Optional)
+    * `pipeline/qc.py` (Optional)
+    * `pipeline/runner.py` (Optional)
 
-```bash
-python3 tests/test_pipeline.py
-```
+5. Run your ingest:
+    ```
+    $ python run_pipeline.py
+    ```
 
-Unit tests will run on all data placed in the data/inputs folder and will use
-the development configuration.  We recommend using an IDE to run and debug your unit tests.
+    Note that you can also specify some other options:
+    ```    
+    # Specify which storage configuration to use (defaults to prod)
+    $ python run_pipeline.py --mode prod
+    $ python run_pipeline.py --mode dev
+
+    # Specify path to different inputs
+    $ python run_pipeline.py [PATH_TO_INPUTS]
+
+    # Run the test suite and generate a coverage report
+    pytest --cov --report-type=html
+    ```
+
+6. Customize this README to better reflect your project
+
+## Additional Resources
+
+- Data standards specifications: https://github.com/tsdat/data_standards
+- Learn more about xarray: 
+    - https://xarray.pydata.org
+    - https://github.com/pydata/xarray
+- Other useful python tips and tricks:
+    - matplotlib guide: https://realpython.com/python-matplotlib-guide/
+    - pytest: https://github.com/pytest-dev/pytest
+    - black: https://black.readthedocs.io/
