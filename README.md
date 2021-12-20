@@ -1,5 +1,7 @@
 # ingest-template-local
 
+> ***Note: this repository is now deprecated in favor of https://github.com/tsdat/ingest-template.***
+
 This is a template repository that can be used to set up tsdat ingests on your local computer. 
 
 - other templates: https://github.com/tsdat/template-repositories
